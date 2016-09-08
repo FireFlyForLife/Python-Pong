@@ -3,8 +3,8 @@ from GameObjects import Platform
 from GameObjects import Ball
 import RandomUtils
 
-import Tests
-Tests.vectorTest()
+#import Tests
+#Tests.vectorTest()
 
 def setup():
     background(0, 0, 0)
