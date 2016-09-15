@@ -9,10 +9,15 @@ class Vector2d:
         mag2 = self.x ** 2 + self.y ** 2
         return sqrt(abs(mag2))
     
+    def normalize_(self):
+        magn = self.magnitude()
+        return self.__truediv__(magn)
+    
     def deg(self, newDeg = None):
         if newDeg is None:
             return degrees(atan2(self.y, self.x))
-        self.rad(radians(newDeg))
+        else:
+            self.rad(radians(newDeg))
     
     def rad(self, newRad = None):
         if newRad is None:
@@ -22,26 +27,33 @@ class Vector2d:
         self.y = sin(newRad) * mg
     
     def __add__(self, other):
-        if other is Vector2d:
+        if isinstance(other, Vector2d):
             return Vector2d(self.x + other.x, self.y + other.y)
         raise ValueType("'other' needs to be a Vector2d")
     
     def __sub__(self, other):
-        if other is Vector2d:
-            return Vector2d(self.x + other.x, self.y + other.y)
+        if isinstance(other, Vector2d):
+            return Vector2d(self.x - other.x, self.y - other.y)
         raise ValueType("'other' needs to be a Vector2d")
         
     def __mul__(self, other):
-        if other is Vector2d:
+        if isinstance(other, Vector2d):
             return Vector2d(self.x * other.x, self.y * other.y)
-        elif other is int or other is float:
+        elif isinstance(other, int) or isinstance(other, float):
             return Vector2d(self.x * other, self.y * other)
-        raise ValueType("'other' needs to be a Vector2d or int or float")
-        
-    def __truediv__(self, other):
-        if other is Vector2d:
+        raise Exception("'other' needs to be a Vector2d or int or float, not " + str(type(other)))
+    
+    def __div__(self, other):
+        if isinstance(other, Vector2d):
             return Vector2d(self.x / other.x, self.y / other.y)
-        elif other is int or other is float:
+        elif isinstance(other, int) or isinstance(other, float):
+            return Vector2d(self.x / other, self.y / other)
+        raise ValueType("'other' needs to be a Vector2d or int or float")
+    
+    def __truediv__(self, other):
+        if isinstance(other, Vector2d):
+            return Vector2d(self.x / other.x, self.y / other.y)
+        elif isinstance(other, int) or isinstance(other, float):
             return Vector2d(self.x / other, self.y / other)
         raise ValueType("'other' needs to be a Vector2d or int or float")
     

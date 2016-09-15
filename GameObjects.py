@@ -1,4 +1,5 @@
 from MathF import Vector2d as Vector
+from RandomUtils import deltaTime as dTime
 
 def test():
     print("test")
@@ -9,12 +10,12 @@ class MoveObject:
     #pos, vel
     
     def load(self, pX, pY):
-        self.x = pX
-        self.y = pY
-        self.vX = 0
-        self.vY = 0
+        #self.x = pX
+        #self.y = pY
+        #self.vX = 0
+        #self.vY = 0
         
-        self.pos = Vector(self.x, self.y)
+        self.pos = Vector(pX, pY)
         self.vel = Vector()
         
 class Ball(MoveObject):
@@ -28,19 +29,19 @@ class Ball(MoveObject):
             self.r = radius
     
     def render(self):
-        ellipse(self.x, self.y, self.r, self.r)
+        ellipse(self.pos.x, self.pos.y, self.r, self.r)
     
     def update(self):
-        newY = self.y + self.vY
-        if newY > height - self.r:
-            self.y = height - self.r
-        elif newY < 0:
-            self.y = 0
+        newY = self.pos.y + self.vel.y
+        if newY + self.r / 2 > height:
+            self.pos.y = height - self.r / 2
+        elif newY - self.r / 2 <= 0:
+            self.pos.y = 0 + self.r / 2
         else:
-            self.y = newY
+            self.pos.y = newY
         
-        newX = self.x + self.vX
-        self.x = newX
+        newX = self.pos.x + self.vel.x
+        self.pos.x = newX
         #if newX > width - self.r:
         #    self.x = width - self.r
         #elif newX < 0:
@@ -65,13 +66,13 @@ class Platform(MoveObject):
             self.h = pH
         
     def render(self):
-        rect(self.x, self.y, self.w, self.h)
+        rect(self.pos.x, self.pos.y, self.w, self.h)
     
     def update(self):
-        newY = self.y + self.vY
+        newY = self.pos.y + self.vel.y
         if newY > height - self.h:
-            self.y = height - self.h
+            self.pos.y = height - self.h
         elif newY < 0:
-            self.y = 0
+            self.pos.y = 0
         else:
-            self.y = newY
+            self.pos.y = newY
