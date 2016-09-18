@@ -29,6 +29,7 @@ def draw():
     #bal
     ball.update()
     checkGoal(ball)
+    
     #calc collision
     calcCollisions()
     checkPlatformCol(player1, False)
@@ -56,7 +57,7 @@ def drawDebug():
     dir = ball.pos - boxCenter
     linedir(boxCenter.x, boxCenter.y, dir.x, dir.y)
     
-    text("speed: " + str(ball.vel) + " w/ " + str(ball.vel.magnitude()), 10, 100)
+    text("speed: " + str(ball.vel) + " @ " + str(ball.vel.magnitude()), 10, 100)
     text("deg: " + str(ball.vel.deg()), 10, 110)
     
     stroke(0, 0, 0)
@@ -81,22 +82,22 @@ def checkPlatformCol(platform, bigger):
     y = ball.pos.y + ball.r / 2
     #if x >= platform.pos.x and x <= platform.pos.x + platform.w and y >= platform.pos.y and y <= platform.pos.y + platform.h:
     if RandomUtils.intersects(ball, platform):
-        if not bigger and ball.vel.x < 0:
+        if ball.pos.x < width / 2 and ball.vel.x < 0:
             verticalBounce(ball, platform)
-        if bigger and ball.vel.x > 0:
+        if ball.pos.x > width / 2 and ball.vel.x > 0:
             verticalBounce(ball, platform)
             
 def verticalBounce(ball, platform):
     ball.vel.x *= -1
     oldmag = ball.vel.magnitude()
-    ball.vel *= random(1, float(Config.ballSpeedMultiplier))
+    ball.vel *= random(1.0, float(Config.ballSpeedMultiplier))
     
     boxCenter = Vector(platform.pos.x + platform.w / 2, platform.pos.y + platform.h / 2)
     dir = ball.pos - boxCenter
     leng = ball.vel.magnitude()
     norm_dir = dir.normalize_()
-    avg = (ball.vel.normalize_() + norm_dir) / 2
-    vec = avg.normalize_() * leng
+    average = (ball.vel.normalize_() + norm_dir) / 2
+    vec = average.normalize_() * leng
     
     #TODO: define min and max
     ball.vel = vec
@@ -108,27 +109,30 @@ def verticalBounce(ball, platform):
     
 def checkGoal(ball):
     if ball.pos.x > width:
-        global p1score
+        global p1score, lastScored
         p1score += 1
+        lastScored = player1
         resetBall(ball)
     elif ball.pos.x < 0:
-        global p2score
+        global p2score, lastScored
         p2score += 1
+        lastScored = player2
         resetBall(ball)
 
 def resetBall(ball):
-    ball.pos.x = Config.wdth/2 - 5
-    ball.pos.y = Config.hght/2 - 5
+    ball.pos.x = Config.wdth/2
+    ball.pos.y = Config.hght/2
     
     target = player1
-    if lastScored == 1:
+    if lastScored == player2:
         target = player2
     
-    directDir = ball.pos - target.pos
+    newVel = Vector()
+    directDir = target.pos - ball.pos
     dir = directDir.normalize_() * Config.initialBallSpeed
-    deg = dir.deg() + random(-Config.initialBallAngleRandom, Config.initialBallAngleRandom)
+    dir.deg( dir.deg() + random(-Config.initialBallAngleRandom, Config.initialBallAngleRandom) )
     
-    ball.vel.deg(deg)
+    ball.vel = dir
     
     #xRange = (-Config.initialBallSpeed , -Config.initialBallSpeed * 0.75 ), (Config.initialBallSpeed * 0.75, Config.initialBallSpeed )
     #ball.vel.x = RandomUtils.randomRanges(xRange)
@@ -157,10 +161,13 @@ def keyReleased():
 
 p1score = 0
 p2score = 0
-lastScored = int(random(0, 1))
 
 player1 = Platform(10, Config.hght/2 - 30)
 player2 = Platform(Config.wdth-20, Config.hght/2 - 30)
+
+lastScored = player1
+if int(random(1)) == 1:
+    lastScored = player2
 
 ball = Ball(Config.wdth/2 - 5, Config.hght/2 - 5)
 resetBall(ball)

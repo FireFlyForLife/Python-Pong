@@ -4,14 +4,14 @@ hght = 400
 
 #ball
 initialBallSpeed = 3
-initialBallAngleRandom = 20
+initialBallAngleRandom = 40
 ballSpeedMultiplier = 1.1
 
-ballBounceRandom = 20
+ballBounceRandom = 15
 ballPlayerBounceRandom = 10
 
 #player
 playerSpeed = 5
 
 #misc
-debug = True
+debug = False
