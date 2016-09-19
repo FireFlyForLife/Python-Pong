@@ -1,8 +1,8 @@
 # The exported and packaged bin files/folders
 *.rar
 *.zip
-#application.windows32/
-#application.windows64/
+application.windows32/
+application.windows64/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
