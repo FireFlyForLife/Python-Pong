@@ -27,13 +27,18 @@ def draw():
     player2.update()
     
     #bal
-    ball.update()
-    checkGoal(ball)
-    
-    #calc collision
-    calcCollisions()
-    checkPlatformCol(player1, False)
-    checkPlatformCol(player2, True)
+    cycles = ceil(ball.vel.magnitude() / Config.physicsMaxSpeed)
+    for x in range(cycles):
+        print(str(x) + " of " + str(cycles))
+        spd = min(Config.physicsMaxSpeed, ball.vel.magnitude() - Config.physicsMaxSpeed * x)
+        print(spd)
+        ball.update(spd)
+        checkGoal(ball)
+        
+        #calc collision
+        calcCollisions()
+        checkPlatformCol(player1, False)
+        checkPlatformCol(player2, True)
     
     #draw
     ball.render()
@@ -103,9 +108,7 @@ def verticalBounce(ball, platform):
     ball.vel = vec
     angle = ball.vel.deg() + random(-Config.ballPlayerBounceRandom, Config.ballPlayerBounceRandom)
     ball.vel.deg(angle)
-    print(ball.vel.magnitude() - oldmag)
-    #ball.vel.x += random(-Config.ballBounceRandom, Config.ballBounceRandom)
-    #ball.vel.y += random(-Config.ballBounceRandom, Config.ballBounceRandom)
+    #print(ball.vel.magnitude() - oldmag)
     
 def checkGoal(ball):
     if ball.pos.x > width:
@@ -135,7 +138,7 @@ def resetBall(ball):
     ball.vel = dir
     
     #xRange = (-Config.initialBallSpeed , -Config.initialBallSpeed * 0.75 ), (Config.initialBallSpeed * 0.75, Config.initialBallSpeed )
-    #ball.vel.x = RandomUtils.randomRanges(xRange)
+    #ball.vel.deg(180)
     #yRange = (-Config.initialBallSpeed, -Config.initialBallSpeed * 0.75), (Config.initialBallSpeed * 0.75, Config.initialBallSpeed)
     #ball.vel.y = RandomUtils.randomRanges(yRange) / 2
 

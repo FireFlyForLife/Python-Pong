@@ -31,8 +31,12 @@ class Ball(MoveObject):
     def render(self):
         ellipse(self.pos.x, self.pos.y, self.r, self.r)
     
-    def update(self):
-        newY = self.pos.y + self.vel.y
+    def update(self, maxSpeed):
+        rVel = self.vel
+        if rVel.magnitude() > maxSpeed:
+            rVel = rVel.normalize_() * maxSpeed
+        
+        newY = self.pos.y + rVel.y
         if newY + self.r / 2 > height:
             self.pos.y = height - self.r / 2
         elif newY - self.r / 2 <= 0:
@@ -40,7 +44,7 @@ class Ball(MoveObject):
         else:
             self.pos.y = newY
         
-        newX = self.pos.x + self.vel.x
+        newX = self.pos.x + rVel.x
         self.pos.x = newX
         #if newX > width - self.r:
         #    self.x = width - self.r

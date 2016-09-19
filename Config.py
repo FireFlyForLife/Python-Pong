@@ -10,8 +10,10 @@ ballSpeedMultiplier = 1.1
 ballBounceRandom = 15
 ballPlayerBounceRandom = 10
 
+physicsMaxSpeed = 5
+
 #player
 playerSpeed = 5
 
 #misc
-debug = False
+debug = True
