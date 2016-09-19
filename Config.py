@@ -16,4 +16,4 @@ physicsMaxSpeed = 5
 playerSpeed = 5
 
 #misc
-debug = True
+debug = False
