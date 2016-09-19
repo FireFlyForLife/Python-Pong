@@ -1,4 +1,7 @@
-pong_0_1.rar
+# The exported and packaged bin files/folders
+*.rar
+application.windows32/
+application.windows64/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
