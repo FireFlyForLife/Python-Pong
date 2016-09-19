@@ -2,5 +2,6 @@
 A Pong game made in Python with the Processing library
 
 ##Releases
-Go to the 'application.windows32' or 'application.windows64' folder depending on your windows version.
-Pong.exe requires Java of at least version 7
+To download and play the game look under [Releases](https://github.com/FireFlyForLife/Python-Pong/releases).
+The versions are for windows 64 bit (pong_a.b_x64.zip) or 32 bit (pong_a.b_x86.zip)
+Because of the Processing library, java 7 or higher is required
