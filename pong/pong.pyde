@@ -37,8 +37,8 @@ def draw():
         
         #calc collision
         calcCollisions()
-        checkPlatformCol(player1, False)
-        checkPlatformCol(player2, True)
+        checkPlatformCol(player1)
+        checkPlatformCol(player2)
     
     #draw
     ball.render()
@@ -82,7 +82,7 @@ def calcCollisions():
         #ball.vel.x += random(-Config.ballBounceRandom, Config.ballBounceRandom)
         #ball.vel.x *= random(1, float(Config.ballSpeedMultiplier))
 
-def checkPlatformCol(platform, bigger):
+def checkPlatformCol(platform):
     x = ball.pos.x + ball.r / 2
     y = ball.pos.y + ball.r / 2
     #if x >= platform.pos.x and x <= platform.pos.x + platform.w and y >= platform.pos.y and y <= platform.pos.y + platform.h:
